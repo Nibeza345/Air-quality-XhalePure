@@ -25,7 +25,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/signup", {
+      const response = await fetch("http://localhost:3000/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,10 +36,13 @@ const Signup = () => {
         console.log("User signed up successfully");
         navigate("/login");
       } else {
-        console.error("Signup failed");
+        const errorData = await response.json();
+        console.error("Signup failed", errorData);
+        alert(errorData.message || "Signup failed");
       }
     } catch (error) {
       console.error("An error occurred:", error);
+      alert("An error occurred: " + error.message);
     }
   };
 
@@ -86,7 +89,7 @@ const Signup = () => {
         <div className="mb-4">
           <label className="block text-gray-700 mb-1" htmlFor="phoneNumber">Phone Number</label>
           <input
-            type="text"
+            type="number"
             id="phoneNumber"
             name="phoneNumber"
             value={formData.phoneNumber}
@@ -118,7 +121,7 @@ const Signup = () => {
             required
           />
         </div>
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded" onClick={handleSubmit}>Sign Up</button>
+        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">Sign Up</button>
       </form>
     </div>
   );

@@ -1,39 +1,48 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const authRouter = require('./routes/authRoute')
+const authRouter = require('./routes/authRoute');
+const jwt = require('jsonwebtoken'); // Import JWT library
+
+const verifyToken = require('./middleware/verifyToken'); // Import verification middleware
+// Import authentication middleware
+
 
 const app = express();
 
-//middlewares
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
-//routes
+// Routes
+app.use('/api/auth', authRouter);
 
-app.use('/api/auth',authRouter);
-
-//mongo db connection
+// MongoDB connection
 mongoose.connect('mongodb://localhost:27017/AIR_QUALITY')
-.then(()=> console.log('mongoDB connecter successfully!'))
-.catch((error)=> console.error('Failed to connect',error))
+    .then(() => console.log('MongoDB connected successfully!'))
+    .catch((error) => console.error('Failed to connect', error));
 
-//global error handler
-    app.use((err,req,res,next)=>{
-        err.statuCode = err.statuCode ||500;
-        err.status = err.status || 'error';
+// Middleware to protect routes requiring authentication
+app.use('/api/dashboard',verifyToken);
+// Server-side route for token verification 
+app.post('/api/verifyToken', verifyToken, (req, res) => {
+  res.status(200).send('Token is valid');
+});
 
-        res.status(err,statuCode).json({
-            status :err.status,
-            message:err.message,
-        });
-        
+// Global error handler
+app.use((err, req, res, next) => {
+    err.statusCode = err.statusCode || 500;
+    err.status = err.status || 'error';
+
+    res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message,
     });
-    
+});
 
-//server
+// Server
 const port = 3000;
 
-app.listen(port,()=>{
-    console.log(`App running on  port ${port}`)
-})
+app.listen(port, () => {
+    console.log(`App running on port ${port}`);
+});
