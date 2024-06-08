@@ -67,9 +67,8 @@ app.post('/login', async (req, res) => {
     return res.status(401).send({ message: 'Invalid password!' });
   }
 
-  const expiresInMinutes = 1;
-  const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: expiresInMinutes * 60 });
-  res.send({ token });
+  const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn:'1h' });
+  res.send({ token , username: user.username});
 });
 
 

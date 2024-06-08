@@ -11,7 +11,7 @@ const Sidebar = () => {
 
   return (
     <div className="flex flex-col h-screen bg-gray-800 text-white">
-      {/* Header */}
+      
       <div className="flex items-center justify-between p-4 bg-green-700">
         <FaLeaf className="text-2xl" />
         <button className="md:hidden text-2xl" onClick={toggleSidebar}>
@@ -19,13 +19,13 @@ const Sidebar = () => {
         </button>
       </div>
 
-      {/* Sidebar items */}
+      
       <div className={`flex-1 flex flex-col items-center justify-center p-4 space-y-4 transition-transform transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:transform-none`}>
         <Link to="/dashboard" className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">
           <FaUser />
           <span className={`${isOpen ? 'inline' : 'hidden'} md:inline`}>Dashboard</span>
         </Link>
-        <Link to="/weather" className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">
+        <Link to="/Weather" className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">
           <FaClipboardList />
           <span className={`${isOpen ? 'inline' : 'hidden'} md:inline`}>Weather</span>
         </Link>

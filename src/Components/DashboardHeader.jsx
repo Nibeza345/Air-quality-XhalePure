@@ -1,13 +1,15 @@
 import React from "react";
-import {FaEnvelope, FaBell, FaUser } from "react-icons/fa";
+import { FaEnvelope, FaBell, FaUser } from "react-icons/fa";
 
-const DashboardHeader = ({ input, setInput, handleSearch, searchIcon }) => {
+const DashboardHeader = () => {
+  const username = localStorage.getItem('username');
+
   return (
-    <nav className='w-full p-3 flex justify-between items-center bg-white shadow'>
-      <h3 className='font-bold tracking-wide text-3xl text-gray-700 '>Welcome Back Nicole👋🏼</h3>
-      <div className='relative flex-1'>
-       
+    <nav className="w-full p-3 flex justify-between items-center bg-white shadow fixed top-0 right-0 z-50 pl-6">
+      <div className="flex items-center">
+        <h3 className="font-bold tracking-wide text-3xl text-gray-700">Welcome Back {username}👋🏼</h3>
       </div>
+      <div className="relative flex-1"></div>
       <div className="flex items-center space-x-4">
         <FaEnvelope className="text-gray-500 cursor-pointer" />
         <FaBell className="text-gray-500 cursor-pointer" />
