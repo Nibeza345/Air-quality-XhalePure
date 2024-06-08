@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router";
 
 const Login = () => {
@@ -11,45 +12,29 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setError(null);
+    const { email, password } = formData;
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+      console.log("Sending credentials:", { email, password });
+      const response = await axios.post('http://localhost:3000/login', {
+        email,
+        password
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Login failed", errorData);
-        setError("Login failed: " + (errorData.message || "Unknown error"));
-        return;
-      }
-
-      const data = await response.json();
-      console.log("Response data:", data);
-      if (data.token) {
-        console.log("Token received:", data.token);
-        localStorage.setItem("token", data.token);
-        console.log("in protected");
-        navigate("/dashboard");
-      } else {
-        console.error("No token found in response");
-        setError("Login failed: No token found in response");
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-      setError("An error occurred: " + error.message);
+      console.log('Response:', response);
+      console.log('Token:', response.data.token);
+      localStorage.setItem('token', response.data.token);
+      navigate('/dashboard');
+    } catch (err) {
+      console.error(err);
     }
   };
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleLogin}
         className="bg-white p-6 rounded shadow-md w-80"
       >
         <h2 className="text-2xl font-bold mb-4">Login</h2>

@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes,Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 
 import Home from "./Components/Home/Home";
 import Login from "./Components/User/Login";
@@ -8,10 +13,8 @@ import Dashboard from "./Components/Dashboard";
 import { useNavigate } from "react-router-dom";
 
 const PrivateRoute = ({ element }) => {
-  
-  const isAuthenticated = false; 
+  const isAuthenticated = false;
 
-  
   return isAuthenticated ? element : <Navigate to="/login" />;
 };
 
@@ -19,10 +22,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />;
         <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

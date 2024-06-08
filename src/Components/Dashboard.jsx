@@ -1,59 +1,48 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Route, Routes } from "react-router-dom";
-import Sidebar from "./sidebar";
+import Sidebar from "../Components/sidebar";
 import Weather from "./Weather";
 import DashboardHeader from "./DashboardHeader";
 
 const Dashboard = () => {
-  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      // Redirect to login page if token is not present
-      window.location.href = "/login";
-    } else {
-      // Send token to server for verification
-      fetch("/api/verifyToken", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token, // Include token in Authorization header
-        },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to verify token");
-          }
-          // Token is valid, set loading to false
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Token verification failed:", error);
-          // Redirect to login page or display error message
-          window.location.href = "/login";
-        });
-    }
-  }, []);
+    const fetchDashboard = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/login');
+        return;
+      }
 
-  if (loading) {
-    // Display loading indicator while verifying token
-    return <div>Loading...</div>;
-  }
+      try {
+        const response = await axios.get('http://localhost:3000/dashboard', {
+          headers: { authorization: `Bearer ${token}` },
+        });
+        setMessage(response.data.message);
+      } catch (err) {
+        localStorage.removeItem('token');
+        navigate('/login');
+      }
+    };
+
+    fetchDashboard();
+  }, [navigate]);
 
   return (
     <div className="flex">
       <Sidebar />
       <div className="flex-1 p-4">
-        <Routes>
-          <Route path="/weather" element={<Weather />} />
+      <Routes>
+          <Route path="/dashboard/*" element={<Weather />} />
         </Routes>
       </div>
-      <div>
-        <DashboardHeader />
-      </div>
+      <DashboardHeader />
     </div>
   );
-};
+}
 
 export default Dashboard;
