@@ -5,12 +5,10 @@ import { Route, Routes } from "react-router-dom";
 import Sidebar from "./sidebar";
 import Weather from "./Weather";
 import DashboardHeader from "./DashboardHeader";
-import AirQualityOverview from "./AqOverview"; 
-import MapView from "./MapView"; 
-import TrendsAndCharts from "./TrendsAndCharts"; 
-import Notifications from "./Notifications"; 
-import Recommendations from "./Recommendations"; 
-import Settings from "./Settings"; 
+import StatsGrid from "./DashCard";
+import ChartsContainer from "./ChartsContainer";
+import DonutChart from "./DonutChart";
+
 
 
 const Dashboard = () => {
@@ -40,17 +38,16 @@ const Dashboard = () => {
   }, [navigate]);
 
   return (
-    <div className="flex">
+    <div className=" flex "> 
     <Sidebar />
-    <div className="flex-1 p-4">
-      <AirQualityOverview />
-      <MapView />
-      <TrendsAndCharts />
-      <Notifications />
-      <Recommendations />
-      <Settings />
-    </div>
     <DashboardHeader />
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center space-y-6 p-6 w-screen">
+    <StatsGrid className="w-full"/>
+    <ChartsContainer  className="w-full"/>
+    <DonutChart className="w-full"/>
+    
+</div>
+
   </div>
   );
 }
