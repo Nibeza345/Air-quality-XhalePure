@@ -2,46 +2,46 @@ import React, { useEffect } from "react";
 import arrow_btn from '../../assets/home/arrow_btn.png';
 
 const hero = {
-  margin: '0px 120px',
-  marginTop: '270px',
+  margin: '0 10%',
+  marginTop: '20vh',
+  textAlign: 'center',
 };
 const hero_text = {
   color: '#fff',
-  fontSize: '110px',
+  fontSize: '8vw',
   fontWeight: 500,
 };
 const hero_explore = {
   display: 'flex',
   alignItems: 'center',
-  gap: '50px',
-  marginTop: '70px',
-  width: 'fit-content',
-  padding: '5px 8px',
-  paddingLeft: '30px',
-  borderRadius: '60px',
+  justifyContent: 'center',
+  gap: '10px',
+  marginTop: '5vh',
+  padding: '5px 10px',
+  borderRadius: '30px',
   background: '#fff',
   cursor: 'pointer',
 };
 const hero_explore_p = {
   color: '#292929',
-  fontSize: '20px',
+  fontSize: '3vw',
   fontWeight: 500,
 };
 const hero_dot_play = {
-  marginTop: '120px',
+  marginTop: '5vh',
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'center',
 };
 const hero_dots = {
   display: 'flex',
   alignItems: 'center',
-  gap: '23px',
+  gap: '2vw',
   listStyle: 'none',
 };
 const hero_dot = {
-  height: '15px',
-  width: '15px',
-  borderRadius: '7.5px',
+  height: '2vw',
+  width: '2vw',
+  borderRadius: '50%',
   background: '#fff',
   cursor: 'pointer',
 };
@@ -69,7 +69,6 @@ const Hero = ({ heroData, heroCount, setHeroCount }) => {
         <p style={hero_explore_p}>Explore features</p>
         <img src={arrow_btn} alt="arrow_btn" />
       </div>
-
       <div style={hero_dot_play}>
         <ul style={hero_dots}>
           {heroData.map((_, index) => (

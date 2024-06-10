@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Route, Routes } from "react-router-dom";
 import Sidebar from "./sidebar";
 import Weather from "./Weather";
 import DashboardHeader from "./DashboardHeader";
-import StatsGrid from "./DashCard";
+import DashCards from "./DashCard";
 import ChartsContainer from "./ChartsContainer";
-import DonutChart from "./DonutChart";
-
-
 
 const Dashboard = () => {
   const [message, setMessage] = useState('');
@@ -38,17 +34,16 @@ const Dashboard = () => {
   }, [navigate]);
 
   return (
-    <div className=" flex "> 
-    <Sidebar />
-    <DashboardHeader />
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center space-y-6 p-6 w-screen">
-    <StatsGrid className="w-full"/>
-    <ChartsContainer  className="w-full"/>
-    <DonutChart className="w-full"/>
-    
-</div>
-
-  </div>
+    <div className="flex"> 
+      <Sidebar />
+      <div className="flex-1 min-h-screen bg-gray-100 flex flex-col">
+        <DashboardHeader />
+        <div className="flex flex-col items-center justify-center space-y-6 p-6 mt-16 w-full">
+          <DashCards className="w-full" />
+          <ChartsContainer className="w-full" />
+        </div>
+      </div>
+    </div>
   );
 }
 

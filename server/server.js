@@ -11,10 +11,7 @@ const JWT_SECRET = "mQvL$P2Gm3qB#zjR8wZ&uV7d!T*Xa9rD";
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/AIR_QUALITY', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect('mongodb://localhost:27017/AIR_QUALITY');
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -73,7 +70,15 @@ app.post('/login', async (req, res) => {
 
 
 app.get('/dashboard', (req, res) => {
-  const token = req.headers.authorization.split(' ')[1];
+ // Extracts the token from the 'Authorization' header. The token is expected to be in the format 'Bearer <token>'.
+const token = req.headers.authorization.split(' ')[1];
+
+
+
+
+
+
+
 
   jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) {

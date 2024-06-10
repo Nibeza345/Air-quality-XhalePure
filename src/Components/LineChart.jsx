@@ -10,15 +10,15 @@ const data = {
     {
       label: 'PM2.5 Level',
       data: [18, 20, 15, 22, 17, 21, 19],
-      borderColor: 'rgba(255, 99, 132, 1)',
-      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgba(200, 225, 132, 0.6)',
+      backgroundColor: 'rgba(200, 225, 132, 0.6)',
       fill: true,
     },
     {
       label: 'PM10 Level',
       data: [12, 15, 10, 16, 11, 14, 13],
-      borderColor: 'rgba(54, 162, 235, 1)',
-      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgba(225,225,225 0.6)',
+      backgroundColor: 'rgba(225,225,225 0.6)',
       fill: true,
     },
   ],
@@ -39,17 +39,17 @@ const options = {
 
 const LineChart = () => {
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
-      <div className="flex justify-between items-center mb-4">
-        <div>
-          <span className="text-red-500 font-semibold">PM2.5 Level</span> &bull; 
-          <span className="text-blue-500 font-semibold ml-2">PM10 Level</span>
+    <div className="bg-white p-6 rounded-lg shadow w-full max-w-2xl mx-auto md:mx-0">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+        <div className="mb-4 md:mb-0">
+          <span className="text-green-300 font-semibold">PM2.5 Level</span> &bull; 
+          <span className="text-black-500 font-semibold ml-2">PM10 Level</span>
           <div className="text-gray-500 text-sm">Last 7 Days</div>
         </div>
-        <div>
-          <button className="bg-gray-200 text-gray-700 px-2 py-1 rounded mx-1">Day</button>
-          <button className="bg-gray-200 text-gray-700 px-2 py-1 rounded mx-1">Week</button>
-          <button className="bg-gray-200 text-gray-700 px-2 py-1 rounded mx-1">Month</button>
+        <div className="flex space-x-2">
+          <button className="bg-gray-200 text-gray-700 px-2 py-1 rounded">Day</button>
+          <button className="bg-gray-200 text-gray-700 px-2 py-1 rounded">Week</button>
+          <button className="bg-gray-200 text-gray-700 px-2 py-1 rounded">Month</button>
         </div>
       </div>
       <Line data={data} options={options} />

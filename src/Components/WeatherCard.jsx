@@ -19,7 +19,7 @@ const WeatherCard = ({
   iconString,
   conditions,
 }) => {
-  const [icon, setIcon] = useState(snow);
+  const [icon, setIcon] = useState(sun);
   const { date, time } = useDate();
 
   useEffect(() => {
