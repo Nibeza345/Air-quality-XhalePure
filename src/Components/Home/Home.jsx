@@ -5,9 +5,9 @@ import Hero from "./Hero";
 
 const Home = () => {
   const heroData = [
-    { text1: "Dive into", text2: "what you love" },
-    { text1: "Indulge", text2: "your passions" },
-    { text1: "Give in to", text2: "your passions" },
+    { text1: "Breathe", text2: "Clean Air" },
+    { text1: "Monitor", text2: "Air Quality" },
+    { text1: "Stay", text2: "Informed" },
   ];
 
   const [heroCount, setHeroCount] = useState(0);

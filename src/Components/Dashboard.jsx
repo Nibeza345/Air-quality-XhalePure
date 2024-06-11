@@ -25,8 +25,14 @@ const Dashboard = () => {
         });
         setMessage(response.data.message);
       } catch (err) {
-        localStorage.removeItem('token');
-        navigate('/login');
+        if (err.response.status === 401) {
+          alert('Your session has expired. Please log in again.');
+          localStorage.removeItem('token');
+          navigate('/login');
+        } else {
+          console.error('Error:', err);
+        
+        }
       }
     };
 

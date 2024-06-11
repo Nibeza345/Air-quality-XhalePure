@@ -1,9 +1,15 @@
 import React from "react";
 import { FaSearch, FaEnvelope, FaBell, FaUser } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Header = ({ input, setInput, handleSearch, searchIcon }) => {
   return (
     <nav className='w-full p-3 flex justify-between items-center bg-white shadow'>
+      <Link to="/dashboard" className="flex items-center">
+          <FaArrowLeft className="mr-2 bg-black" />
+          
+        </Link>
       <h1 className='font-bold tracking-wide text-3xl text-gray-700 '>Weather App</h1>
       <div className='relative flex-1'>
         <input 
