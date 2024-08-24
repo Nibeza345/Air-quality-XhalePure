@@ -1,16 +1,24 @@
-import React from "react";
-import { FaSearch, FaEnvelope, FaBell, FaUser } from "react-icons/fa";
-import { FaArrowLeft } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaSearch, FaEnvelope, FaBell, FaUser, FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useStateContext } from "../context/index"; 
 
-const Header = ({ input, setInput, handleSearch, searchIcon }) => {
+const Header = () => {
+  const { setPlace } = useStateContext(); 
+  const [input, setInput] = useState("");
+
+  const handleSearch = () => {
+    if (input.trim()) {
+      setPlace(input);
+    }
+  };
+
   return (
     <nav className='w-full p-3 flex justify-between items-center bg-white shadow'>
       <Link to="/dashboard" className="flex items-center">
-          <FaArrowLeft className="mr-2 bg-black" />
-          
-        </Link>
-      <h1 className='font-bold tracking-wide text-3xl text-gray-700 '>Weather App</h1>
+        <FaArrowLeft className="mr-2 bg-black" />
+      </Link>
+      <h1 className='font-bold tracking-wide text-3xl text-gray-700'>Weather App</h1>
       <div className='relative flex-1'>
         <input 
           type="text" 
@@ -18,8 +26,9 @@ const Header = ({ input, setInput, handleSearch, searchIcon }) => {
           placeholder="Search location"
           value={input} 
           onChange={e => setInput(e.target.value)} 
+          onKeyDown={e => e.key === 'Enter' && handleSearch()} // Allow pressing Enter to search
         />
-       <FaSearch 
+        <FaSearch 
           className="absolute left-3 top-3 h-6 w-6 text-gray-300 cursor-pointer ml-40 mr-30 " 
           onClick={handleSearch} 
         />

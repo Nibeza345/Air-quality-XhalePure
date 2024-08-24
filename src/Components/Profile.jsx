@@ -10,12 +10,16 @@ const Profile = () => {
     phoneNumber: "",
     password: "",
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
         console.error("Token not found in localStorage");
+        setError("Token not found. Please log in.");
+        setLoading(false);
         return;
       }
 
@@ -26,6 +30,9 @@ const Profile = () => {
         setUserData(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
+        setError("Error fetching user data. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -70,6 +77,7 @@ const Profile = () => {
       alert("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
+      alert("Error updating profile. Please try again later.");
     }
   };
 
@@ -83,9 +91,18 @@ const Profile = () => {
         alert("Your account has been deleted.");
       } catch (error) {
         console.error("Error deleting account:", error);
+        alert("Error deleting account. Please try again later.");
       }
     }
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white shadow-md rounded-md">

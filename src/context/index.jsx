@@ -6,7 +6,7 @@ const StateContext = createContext();
 export const StateContextProvider = ({ children }) => {
   const [weather, setWeather] = useState({});
   const [values, setValues] = useState([]);
-  const [place, setPlace] = useState("paris");
+  const [place, setPlace] = useState("kigali");
   const [location, setLocation] = useState("");
 
   const fetchWeather = async () => {
@@ -33,7 +33,7 @@ export const StateContextProvider = ({ children }) => {
       setWeather(thisData.values[0]);
     } catch (e) {
       console.log(e);
-      alert("This place does not exist");
+      alert("can't fetch the data");
     }
   };
 
