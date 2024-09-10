@@ -20,7 +20,7 @@ const Login = () => {
     const { email, password } = formData;
 
     try {
-      console.log("Sending credentials:", { email, password });
+      console.log("Sending credentials:", { email});
       const response = await axios.post("http://localhost:3000/login", {
         email,
         password,

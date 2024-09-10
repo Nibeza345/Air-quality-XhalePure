@@ -24,7 +24,7 @@ const Profile = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:3000/profile", {
+        const response = await axios. get("http://localhost:3000/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUserData(response.data);
@@ -54,7 +54,7 @@ const Profile = () => {
       return false;
     }
     if (!phoneRegex.test(userData.phoneNumber)) {
-      alert("Please enter a valid phone number that starts with 07 and has 10 digits.");
+      alert("A valid phone number starts with 07 and has 10 digits.");
       return false;
     }
     if (!passwordRegex.test(userData.password)) {
