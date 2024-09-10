@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const JWT_SECRET = "mQvL$P2Gm3qB#zjR8wZ&uV7d!T*Xa9rD"; 
+const JWT_SECRET = "mQvL$P2Gm3qB#zjR8wZ&uV7d!T*Xa10rD"; 
 
 app.use(cors());
 app.use(express.json());
@@ -47,7 +47,6 @@ app.post('/signup', async (req, res) => {
   await user.save();
 
   res.status(201).send('User created');
-  console.log('signup successful');
 });
 
 app.post('/login', async (req, res) => {
@@ -85,6 +84,21 @@ app.get('/dashboard', authenticateToken, (req, res) => {
   res.send({ message: 'Welcome to the dashboard' });
 });
 
+app.get('/profile', authenticateToken, async (req, res) => {
+  const userId = req.user.userId;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    res.send(user);
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.status(500).send({ message: 'Error fetching user data' });
+  }
+});
+
 app.put('/profile', authenticateToken, async (req, res) => {
   const userId = req.user.userId;
   const { username, email, location, phoneNumber, password } = req.body;
@@ -104,20 +118,6 @@ app.put('/profile', authenticateToken, async (req, res) => {
   }
 });
 
-app.get('/profile', authenticateToken, async (req, res) => {
-  const userId = req.user.userId;
-
-  try {
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).send({ message: 'User not found' });
-    }
-    res.send(user);
-  } catch (error) {
-    console.error('Error fetching user data:', error);
-    res.status(500).send({ message: 'Error fetching user data' });
-  }
-});
 
 app.delete('/delete/:id', async (req, res) => {
   try {
