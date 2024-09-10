@@ -14,6 +14,8 @@ import Weather from "./Components/Weather";
 import Contact from "./Components/Contact";
 import Profile from "./Components/Profile";
 import AboutUs from "./Components/About";
+import Todo from "./Components/todo";
+import Settings from "./Components/settings";
 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = false;
@@ -33,6 +35,8 @@ const App = () => {
         <Route path="/Contact" element={<Contact/>}/>
         <Route path="/Profile" element={<Profile/>}/>
         <Route path="/About" element={<AboutUs/>}/>
+        <Route path="/todo" element= {<Todo/>}/>
+        <Route path="/settings" element={<Settings/>}/>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
