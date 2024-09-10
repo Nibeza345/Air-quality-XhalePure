@@ -22,22 +22,23 @@ const Profile = () => {
         setLoading(false);
         return;
       }
-
+  
       try {
-        const response = await axios. get("http://localhost:3000/profile", {
+        const response = await axios.get("http://localhost:3000/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUserData(response.data);
       } catch (error) {
-        console.error("Error fetching user data:", error);
-        setError("Error fetching user data. Please try again later.");
+        console.error("Error fetching user data:", error.response ? error.response.data : error.message);
+        setError(error.response?.data?.message || "Error fetching user data. Please try again later.");
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchUserData();
   }, []);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
