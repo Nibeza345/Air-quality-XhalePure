@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate} from "react-router";
-import { Link } from "react-router-dom";
-import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate,Link} from "react-router";
+import { FaArrowLeft, FaEye, FaEyeSlash } from "react-icons/fa";
 import image1 from '../../assets/home/image1.jpg'
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -33,6 +33,10 @@ const Login = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -78,6 +82,15 @@ const Login = () => {
               className="w-full px-3 py-2 border rounded"
               required
             />
+            <span
+            onClick={togglePasswordVisibility}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+            >
+              {showPassword? <FaEye/> : <FaEyeSlash/>}
+            </span>
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password}</p>
+            )}
           </div>
           <button
             type="submit"

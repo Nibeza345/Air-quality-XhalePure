@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { FaArrowLeft } from "react-icons/fa";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import icons for the eye
+import { useNavigate,Link } from "react-router-dom";
+import { FaArrowLeft,FaEye, FaEyeSlash } from "react-icons/fa";
 import image3 from "../../assets/home/image3.jpg";
 
 const Signup = () => {
@@ -16,8 +14,8 @@ const Signup = () => {
     confirmPassword: "",
   });
   const [errors, setErrors] = useState({});
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to toggle confirm password visibility
+  const [showPassword, setShowPassword] = useState(false); 
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -75,7 +73,7 @@ const Signup = () => {
     }
   };
 
-  // Toggle the visibility of the password fields
+ 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -164,11 +162,11 @@ const Signup = () => {
             )}
           </div>
           <div className="mb-4 relative">
-            <label className="block text-gray-700 mb-1" htmlFor="password">
+            <label className="block text-gray-800 mb-1" htmlFor="password">
               Password
             </label>
             <input
-              type={showPassword ? "text" : "password"} // Toggle between 'text' and 'password'
+              type={showPassword ? "text" : "password"}
               id="password"
               name="password"
               value={formData.password}
@@ -180,7 +178,7 @@ const Signup = () => {
               onClick={togglePasswordVisibility}
               className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
             >
-              {showPassword ? <FaEyeSlash /> : <FaEye />} {/* Eye icon */}
+              {showPassword ? <FaEye /> : <FaEyeSlash />} 
             </span>
             {errors.password && (
               <p className="text-red-500 text-sm">{errors.password}</p>
@@ -194,7 +192,7 @@ const Signup = () => {
               Confirm Password
             </label>
             <input
-              type={showConfirmPassword ? "text" : "password"} // Toggle between 'text' and 'password'
+              type={showConfirmPassword ? "text" : "password"}
               id="confirmPassword"
               name="confirmPassword"
               value={formData.confirmPassword}
@@ -204,9 +202,9 @@ const Signup = () => {
             />
             <span
               onClick={toggleConfirmPasswordVisibility}
-              className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+              className="absolute inset-y-1 right-0 pr-3 flex items-center cursor-pointer"
             >
-              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />} {/* Eye icon */}
+              {showConfirmPassword ? <FaEye /> : <FaEyeSlash />} 
             </span>
             {errors.confirmPassword && (
               <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
