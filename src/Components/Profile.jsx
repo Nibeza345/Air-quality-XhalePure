@@ -8,7 +8,7 @@ const Profile = () => {
     email: "",
     location: "",
     phoneNumber: "",
-    password: "",
+    password: "", // Keep this empty initially
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,12 +22,14 @@ const Profile = () => {
         setLoading(false);
         return;
       }
-  
+
       try {
         const response = await axios.get("http://localhost:3000/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setUserData(response.data);
+
+        // Set the fetched user data, but keep the password field empty
+        setUserData({ ...response.data, password: "" });
       } catch (error) {
         console.error("Error fetching user data:", error.response ? error.response.data : error.message);
         setError(error.response?.data?.message || "Error fetching user data. Please try again later.");
@@ -35,10 +37,9 @@ const Profile = () => {
         setLoading(false);
       }
     };
-  
+
     fetchUserData();
   }, []);
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -58,7 +59,7 @@ const Profile = () => {
       alert("A valid phone number starts with 07 and has 10 digits.");
       return false;
     }
-    if (!passwordRegex.test(userData.password)) {
+    if (userData.password && !passwordRegex.test(userData.password)) {
       alert("Password must be at least 8 characters long.");
       return false;
     }
@@ -72,7 +73,14 @@ const Profile = () => {
     }
     try {
       const token = localStorage.getItem("token");
-      await axios.put("http://localhost:3000/profile", userData, {
+      const updateData = { ...userData };
+
+      // If the password field is empty, do not include it in the request
+      if (!userData.password) {
+        delete updateData.password;
+      }
+
+      await axios.put("http://localhost:3000/profile", updateData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Profile updated successfully!");
@@ -150,7 +158,7 @@ const Profile = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 mb-1">Password:</label>
+          <label className="block text-gray-700 mb-1">Password</label>
           <input
             type="password"
             name="password"
