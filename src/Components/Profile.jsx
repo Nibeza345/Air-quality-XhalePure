@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Profile = () => {
   const [userData, setUserData] = useState({
@@ -8,10 +9,11 @@ const Profile = () => {
     email: "",
     location: "",
     phoneNumber: "",
-    password: "", // Keep this empty initially
+    password: "",
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -28,11 +30,16 @@ const Profile = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        // Set the fetched user data, but keep the password field empty
         setUserData({ ...response.data, password: "" });
       } catch (error) {
-        console.error("Error fetching user data:", error.response ? error.response.data : error.message);
-        setError(error.response?.data?.message || "Error fetching user data. Please try again later.");
+        console.error(
+          "Error fetching user data:",
+          error.response ? error.response.data : error.message
+        );
+        setError(
+          error.response?.data?.message ||
+            "Error fetching user data. Please try again later."
+        );
       } finally {
         setLoading(false);
       }
@@ -75,7 +82,6 @@ const Profile = () => {
       const token = localStorage.getItem("token");
       const updateData = { ...userData };
 
-      // If the password field is empty, do not include it in the request
       if (!userData.password) {
         delete updateData.password;
       }
@@ -112,6 +118,10 @@ const Profile = () => {
   if (error) {
     return <div>{error}</div>;
   }
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white shadow-md rounded-md">
@@ -157,15 +167,21 @@ const Profile = () => {
             className="w-full px-3 py-2 border rounded-md"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-4 relative">
           <label className="block text-gray-700 mb-1">Password</label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             value={userData.password}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md"
           />
+          <span
+            onClick={togglePasswordVisibility}
+            className="absolute inset-y-0 right-3 top-9 flex items-center cursor-pointer"
+          >
+            {showPassword ? <FaEye/> : <FaEyeSlash />}
+          </span>
         </div>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md">
           Save Changes

@@ -33,7 +33,7 @@ const Login = () => {
       navigate("/dashboard");
     } catch (err) {
       console.error(err);
-      setError("Invalid email or password"); // Updated to handle error correctly
+      setError("Invalid email or password"); 
     }
   };
 
@@ -75,12 +75,11 @@ const Login = () => {
             />
           </div>
           <div className="mb-4 relative">
-            {/* Make this div relative for absolute positioning of the icon */}
             <label className="block text-gray-700 mb-1" htmlFor="password">
               Password
             </label>
             <input
-              type={showPassword ? "text" : "password"} // Corrected to use state
+              type={showPassword ? "text" : "password"} 
               id="password"
               name="password"
               value={formData.password}
