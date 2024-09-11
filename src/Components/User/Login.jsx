@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate,Link} from "react-router";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { FaArrowLeft, FaEye, FaEyeSlash } from "react-icons/fa";
-import image1 from '../../assets/home/image1.jpg'
+import image1 from "../../assets/home/image1.jpg";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -20,7 +21,7 @@ const Login = () => {
     const { email, password } = formData;
 
     try {
-      console.log("Sending credentials:", { email});
+      console.log("Sending credentials:", { email });
       const response = await axios.post("http://localhost:3000/login", {
         email,
         password,
@@ -32,6 +33,7 @@ const Login = () => {
       navigate("/dashboard");
     } catch (err) {
       console.error(err);
+      setError("Invalid email or password"); // Updated to handle error correctly
     }
   };
 
@@ -40,7 +42,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-cover bg-center" style={{ backgroundImage: `url(${image1})` }}>
+    <div
+      className="min-h-screen bg-cover bg-center"
+      style={{ backgroundImage: `url(${image1})` }}
+    >
       <nav className="p-4 bg-gray-800 bg-opacity-75 text-white">
         <Link to="/" className="flex items-center justify-center w-full">
           <FaArrowLeft className="mr-2" />
@@ -69,12 +74,13 @@ const Login = () => {
               required
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 relative">
+            {/* Make this div relative for absolute positioning of the icon */}
             <label className="block text-gray-700 mb-1" htmlFor="password">
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"} // Corrected to use state
               id="password"
               name="password"
               value={formData.password}
@@ -83,14 +89,11 @@ const Login = () => {
               required
             />
             <span
-            onClick={togglePasswordVisibility}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+              onClick={togglePasswordVisibility}
+              className="absolute inset-y-0 right-3 top-8 flex items-center cursor-pointer"
             >
-              {showPassword? <FaEye/> : <FaEyeSlash/>}
+              {showPassword ? <FaEye/> : <FaEyeSlash/>}
             </span>
-            {errors.password && (
-              <p className="text-red-500 text-sm">{errors.password}</p>
-            )}
           </div>
           <button
             type="submit"
