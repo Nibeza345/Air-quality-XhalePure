@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import icons for the eye
 import image3 from "../../assets/home/image3.jpg";
 
 const Signup = () => {
@@ -15,6 +16,8 @@ const Signup = () => {
     confirmPassword: "",
   });
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to toggle confirm password visibility
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -24,9 +27,7 @@ const Signup = () => {
 
   const validation = () => {
     const newErrors = {};
-    const {email, phoneNumber, password, confirmPassword } = formData;
-  
-    
+    const { email, phoneNumber, password, confirmPassword } = formData;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -35,8 +36,7 @@ const Signup = () => {
 
     const phoneRegex = /^07\d{8}$/;
     if (!phoneRegex.test(phoneNumber)) {
-      newErrors.phoneNumber =
-        "Phone number must be 10 digits  and start with 07";
+      newErrors.phoneNumber = "Phone number must be 10 digits and start with 07";
     }
 
     if (password.length < 8) {
@@ -73,6 +73,15 @@ const Signup = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  // Toggle the visibility of the password fields
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
@@ -154,12 +163,12 @@ const Signup = () => {
               <p className="text-red-500 text-sm">{errors.phoneNumber}</p>
             )}
           </div>
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label className="block text-gray-700 mb-1" htmlFor="password">
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"} // Toggle between 'text' and 'password'
               id="password"
               name="password"
               value={formData.password}
@@ -167,11 +176,17 @@ const Signup = () => {
               className="w-full px-3 py-2 border rounded"
               required
             />
+            <span
+              onClick={togglePasswordVisibility}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />} {/* Eye icon */}
+            </span>
             {errors.password && (
               <p className="text-red-500 text-sm">{errors.password}</p>
             )}
           </div>
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label
               className="block text-gray-700 mb-1"
               htmlFor="confirmPassword"
@@ -179,7 +194,7 @@ const Signup = () => {
               Confirm Password
             </label>
             <input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"} // Toggle between 'text' and 'password'
               id="confirmPassword"
               name="confirmPassword"
               value={formData.confirmPassword}
@@ -187,6 +202,12 @@ const Signup = () => {
               className="w-full px-3 py-2 border rounded"
               required
             />
+            <span
+              onClick={toggleConfirmPasswordVisibility}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+            >
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />} {/* Eye icon */}
+            </span>
             {errors.confirmPassword && (
               <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
             )}
